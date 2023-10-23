@@ -1,0 +1,161 @@
+// Challenge 2
+// Rick Senn
+/* 
+Write a new version of the Guess My Number program that does the following: 
+  1. the player and the computer can switch roles. That is, the player picks a number and the computer must guess what it is. 
+    (These guesses should display back to the player e.g. "The computer guessed 10. That's too high! The computer guessed 2. That's too low!" etc.)
+
+  2. the player can choose if the player is the picker or the guesser at the start of the game
+
+  3. the player can choose the difficulty. Easy Mode has unlimited guesses. Medium Mode has a limit of 10 guesses. Hard Mode has a limit of 3 guesses.
+
+Review your Ch 2 Exercise and/or the book demo starting on page 69. It may help to have completed the Ch 2 Exercise assignment first.
+*/
+
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+
+using namespace std;
+
+int main() {
+  //main output
+  int userChoice;
+  srand(static_cast<unsigned int>(time(0)));    //seed random number generator
+
+ 
+    
+  cout << "Welcome to Guess the Number!\n\n";
+  cout << "Please Enter an option:\n\n";
+  cout << "1. Guess the Number\n";
+  cout << "2. Challenge the Computer\n\n";
+  cin >> userChoice;
+
+  //choice #1 - Guess the Number  
+  if(userChoice == 1)
+  {
+    int difficultyLevel;
+    int secretNumber = rand() % 100 + 1;          // random number between 1 and 100
+    int tries = 0;
+    int guess;
+
+    cout << "You have chosen to Guess the Number!\n\n";
+    cout << "Please choose a level of difficulty:\n";
+    cout << "1. Easy (Unlimited Guesses)\n";
+    cout << "2. Medium (10 Guesses)\n";
+    cout << "3. Hard (3 Guesses)\n\n";
+    cin >> difficultyLevel; 
+    int maxAttempts;
+    bool keepPlaying = true;
+
+    switch (difficultyLevel)
+      {
+        case 1:
+          maxAttempts = 999; //unlimited
+          cout << "You have chosen Easy difficulty.\n\n";
+          break;
+        case 2:
+          maxAttempts = 10; //Medium
+          cout << "You have chosen Medium difficulty.\n\n";
+          break;
+        case 3:
+          maxAttempts = 3; //Hard
+          cout << "You have chosen Hard difficulty.\n\n";
+          break;
+        default:
+          cout << "You have made an illegal choice.\n\n";
+      }
+
+    do
+   {
+       cout << "Enter a guess between 1 & 100: ";
+       cin >> guess;
+       ++tries;
+   
+       if (guess > secretNumber)
+       {
+           cout << "You guessed " << guess << ". That's too high!\n\n";
+       }
+       else if (guess < secretNumber)
+       {
+           cout << "You guessed " << guess << ". That's too low!\n\n";
+       }
+       else
+       {
+           cout << "\nThat’s it! You got it in " << tries << " guesses!\n";
+       }
+   } while (guess != secretNumber && tries < maxAttempts);
+
+  } 
+    
+  //choice #2 - Have the computer guess the number
+  else if(userChoice == 2)
+  {
+    int difficultyLevel;
+    int tries = 0;
+    
+    cout << "You have chosen to Challenge the Computer!\n\n";
+    cout << "Please choose a level of difficulty:\n\n";
+    cout << "1. Easy (Unlimited Guesses)\n\n";
+    cout << "2. Medium (10 Guesses)\n\n";
+    cout << "3. Hard (3 Guesses)\n\n";
+    cin >> difficultyLevel;
+    
+    int maxAttempts;
+    int lowNumber = 1;
+    int highNumber = 100;
+    int guess = rand() % (highNumber - lowNumber + 1) + lowNumber;          // random number between 1 and 100
+    int secretNumber;
+    
+
+    switch (difficultyLevel)
+      {
+        case 1:
+          maxAttempts = 999; //unlimited?
+          cout << "You have chosen Easy difficulty.\n\n";
+          break;
+        case 2:
+          maxAttempts = 10; //Medium
+          cout << "You have chosen Medium difficulty.\n\n";
+          break;
+        case 3:
+          maxAttempts = 3; //Hard
+          cout << "You have chosen Hard difficulty.\n\n";
+          break;
+        default:
+          cout << "You have made an illegal choice.\n\n";
+      }
+    cout << "Enter a number for the computer to guess between 1 & 100: \n";
+       cin >> secretNumber;
+
+    while(guess != secretNumber && tries < maxAttempts)
+      {
+        guess = rand() % (highNumber - lowNumber + 1) + lowNumber;    // random number between 1 and 100
+        if (guess > secretNumber)
+       {
+         cout << "The computer guessed " << guess <<". That's too high!\n";
+         highNumber = guess - 1;
+         tries++;
+         
+       }
+       else if (guess < secretNumber)
+       {
+         cout << "The computer guessed " << guess <<". That's too low!\n";
+         lowNumber = guess + 1;
+         tries++;
+       }
+       else
+       {
+        cout << "The computer guessed " << guess <<". That's correct!\n";
+        cout << "The computer got it in " << tries << " guesses!\n";
+       } 
+      }
+  
+  } 
+  //anything other than choice #1 or #2
+  else 
+  {
+    cout << "You have chosen not to play. Good bye!\n\n";
+  }
+  return 0;
+}
