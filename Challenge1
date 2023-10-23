@@ -1,0 +1,33 @@
+#include <iostream>
+using namespace std;
+
+using std::cout;
+using std::endl;
+
+int main() {
+
+	const int SLICE_COST = 3;
+  const int WHOLE_COST = 20;
+  const int CAKE_SLICES = 8;
+  int numSlices;
+
+    
+  cout << "King Cakes are $" << WHOLE_COST << " for a whole cake (8 slices), ";
+  cout << "or $" << SLICE_COST << " per slice.";
+  cout << "\nHow many slices do you want?:";
+  
+  cin >> numSlices;
+
+  int wholeCake = numSlices/CAKE_SLICES;
+  int remainSlices = numSlices%CAKE_SLICES;
+  int cakeTotal = wholeCake*WHOLE_COST;
+  int sliceTotal = remainSlices*SLICE_COST;
+  int totalCost = cakeTotal+sliceTotal;
+  
+  cout << "\n\nYou have chosen " << numSlices << " slices of king cake.";
+  cout << "\n\nYou bought " << wholeCake << " King Cakes" << " at $" << WHOLE_COST << " each ";
+  cout << "and " << remainSlices << " slices at $" << SLICE_COST << " each.";
+  cout << "\nYour total is $" << totalCost << ".";
+  
+  return 0;
+}
