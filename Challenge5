@@ -1,0 +1,148 @@
+/*
+You will refactor your Chapter 4 Challenge to use functions! You may wish to copy your code from the previous Challenge OR rewrite entirely. It is up to you.
+
+As a reminder, for the Chapter 4 Challenge, you were supposed to:
+    //Write a program using loops, vectors, and iterators
+    //that allows a user to maintain a list of their favorite games 
+    //(or movies if you prefer). 
+    // The program should allow the user to list all game titles,
+    // add a game title, and remove a game title.
+
+    //You should have a prompt for a user such as:
+      PROGRAM MENU:
+      PRESS 1 TO VIEW ALL TITLES
+      PRESS 2 TO ADD A TITLE
+      PRESS 3 TO REMOVE A TITLE
+      PRESS 0 TO QUIT
+    //The program should not end until the user elects to quit
+    //(hint: recall your loops)
+
+For your refactoring, you must
+1. create a function to handle displaying the menu
+2. create a function to handle viewing all the titles
+3. create a function to handle adding and removing a title
+  NOTE: you must create this function such that you call the SAME FUNCTION NAME but PASS TO IT specific parameters that affect whether your are ADDING or REMOVING a title from the list of titles. There should be ONE FUNCTION
+*/
+
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <vector>
+#include <cstdlib>
+
+using namespace std;
+
+void displayMenu();
+void viewAllTitles();
+void modifyTitles();
+
+vector<string> titles;
+vector<string>::iterator myIterator;
+vector<string>::const_iterator iter;
+string userInput;
+string addTitle;
+string removeTitle;
+int choice;
+
+int main() {
+
+  while(true)
+  {
+    displayMenu();
+    cout << "Enter your choice: ";
+    cin >> choice;
+
+    switch (choice)
+      {
+        case 0: //quitting the program
+          cout << "You have quit the program.\n";
+          return 0;
+          break;
+
+        case 1: //viewing the titles
+          cout << "You have chosen to view your titles. \n";
+          viewAllTitles();
+          break; 
+
+        case 2: //adding the titles
+          cout << "You have chosen to modify your titles. \n";
+          modifyTitles();
+          break;
+
+        default:
+          cout << "You have entered an invalid choice.\n";
+          break;
+        } 
+  }
+
+  return 0;
+}
+
+
+//view Menu
+void displayMenu()
+{
+  cout << "\nPROGRAM MENU:\n\n";
+  cout << "PRESS 1 TO VIEW ALL TITLES\n";
+  cout << "PRESS 2 TO MODIFY YOUR TITLES\n";
+  cout << "PRESS 0 TO QUIT\n\n";
+}
+
+//view Titles
+void viewAllTitles()
+{
+  if(titles.empty())
+  {
+    cout << "You do not have any titles to view.\n\n";
+  }
+  else
+  {
+    cout << "All titles:\n";
+    for(iter=titles.begin(); iter != titles.end(); ++iter)
+      {
+        cout << *iter;
+        cout << "\n";
+      }
+  }
+}
+
+//modify(Add/Delete Titles through one function)
+void modifyTitles()
+{
+  int choice;
+  cout << "Would you like to Add or Delete a title? \n";
+  cout << "PRESS 1 to Add a Title\n";
+  cout << "PRESS 2 to Delete a Title\n";
+  cin >> choice;
+  if(choice == 1){
+    cout << "You have chosen to add a title.\n";  
+    cout << "What would you like to add?\n";
+    getline(cin, addTitle); 
+    getline(cin, addTitle);
+    titles.push_back(addTitle);
+    cout << addTitle << " added.\n";
+  } else {
+    cout << "You have chosen to remove a title.\n\n";
+    if(titles.empty())
+      {
+        cout << "You do not have any titles to view.\n\n";
+      }
+      else { 
+        cout << "What would you like to remove?\n";
+        getline(cin, removeTitle); 
+        getline(cin, removeTitle);
+        myIterator = find(titles.begin(), titles.end(), removeTitle);
+        
+      if (myIterator != titles.end())
+        {
+        titles.erase(myIterator);
+        cout << "\nTitle removed.\n";
+        }
+      else
+        {
+          cout << "That game is not in your list.\n";
+        }
+  }
+  
+  }
+}
